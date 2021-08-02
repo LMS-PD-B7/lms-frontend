@@ -21,3 +21,27 @@ export const register = (params) => {
         console.error(err);
     })
 }
+
+export const getAccount = async (user_id) => {
+    try {
+        const result = await axios.get(process.env.REACT_APP_API_URL + "/auth/" + user_id, getAuthHeader());
+
+        return result.data;
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+export const updateAccount = async (params) => {
+    axios.put(process.env.REACT_APP_API_URL + "/auth/update/", params, getAuthHeader()).then((res) => {
+        console.info(res);
+
+        window.location.reload();
+    }).catch((err) => {
+        console.error(err);
+    });
+}
+
+export const logOut = () => {
+    sessionStorage.removeItem("user_token");
+}
